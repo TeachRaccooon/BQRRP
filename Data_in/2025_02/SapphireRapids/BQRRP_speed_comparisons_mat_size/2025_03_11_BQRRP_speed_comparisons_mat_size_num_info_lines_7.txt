@@ -1,0 +1,106 @@
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:1
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+9736064,  9847164,  11732926,  0,  0,  8665715,  57321828,
+9540291,  9468373,  11729818,  0,  0,  7614255,  57333377,
+9560252,  9474354,  11733028,  0,  0,  7612048,  57333556,
+67956654,  67409460,  93637341,  0,  0,  63683850,  476197447,
+68021324,  67375201,  93668055,  0,  0,  63699200,  476214843,
+67990618,  67360355,  93655049,  0,  0,  63703028,  476222583,
+543155868,  540998871,  797096025,  0,  0,  495952685,  4009671750,
+538665425,  537215659,  786909270,  0,  0,  497058022,  3709049557,
+538566464,  536417113,  785724058,  0,  0,  494114193,  3712378792,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:4
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+3603584,  4712901,  12192862,  0,  0,  4241972,  15497624,
+3165607,  3733624,  13322231,  0,  0,  2013032,  15447554,
+3169905,  3728893,  13318551,  0,  0,  2012577,  15450485,
+20117056,  20368859,  100976649,  0,  0,  14264391,  128359967,
+20889629,  20990899,  100574601,  0,  0,  14281385,  123132116,
+20097666,  20170706,  97607655,  0,  0,  13903238,  129060265,
+150754905,  151442121,  464549003,  0,  0,  111690154,  996789437,
+151272742,  148889950,  509888590,  0,  0,  111476895,  996953709,
+149286025,  147313880,  495551513,  0,  0,  109488914,  1025270936,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:8
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+1933409,  2176059,  11588632,  0,  0,  1051403,  9044330,
+1968330,  2189128,  11621314,  0,  0,  994540,  8822555,
+2053113,  2223454,  11996087,  0,  0,  969551,  8978814,
+11659641,  11807876,  70588488,  0,  0,  7204522,  71785474,
+11445800,  11659067,  70068134,  0,  0,  7314048,  71812634,
+11585415,  11573090,  70178579,  0,  0,  7111220,  73311830,
+77281448,  77054606,  389212532,  0,  0,  54824343,  539358229,
+81693312,  81753764,  375822383,  0,  0,  55800149,  534140320,
+77414104,  78460851,  380176182,  0,  0,  55510559,  541505973,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:16
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+1949570,  2366137,  16296199,  0,  0,  980387,  6120702,
+1637458,  1760166,  16245147,  0,  0,  548202,  5789711,
+1712631,  1852555,  16052788,  0,  0,  558829,  5915478,
+7325699,  7369873,  72764160,  0,  0,  3748307,  57701264,
+7132974,  7232439,  71715083,  0,  0,  3761656,  57911310,
+7338867,  7417644,  72004481,  0,  0,  3751345,  57875591,
+45517858,  45589100,  352477831,  0,  0,  28554831,  409824820,
+45764874,  45658036,  356205444,  0,  0,  28688472,  401975511,
+45376880,  45769544,  352439980,  0,  0,  28793928,  402451722,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:32
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+1782504,  1500084,  61635915,  0,  0,  410888,  5234695,
+1637876,  1494620,  58317445,  0,  0,  354900,  5135365,
+1569600,  1672405,  57414248,  0,  0,  433924,  5035384,
+5627091,  5717421,  164142048,  0,  0,  2164793,  126977780,
+5052232,  5822002,  161495274,  0,  0,  2239487,  127465909,
+5268135,  5286267,  161542338,  0,  0,  2131505,  120800675,
+28617753,  27893077,  556947844,  0,  0,  16090369,  574779399,
+28601769,  27984269,  567695930,  0,  0,  16307176,  573341973,
+28955589,  28816976,  557688815,  0,  0,  16573545,  581956167,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:64
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+3434350,  2885141,  91638598,  0,  0,  763593,  4674576,
+2902086,  2062643,  91388193,  0,  0,  385219,  4707287,
+2845373,  2634987,  91088026,  0,  0,  453358,  5018908,
+7158853,  5551769,  229675906,  0,  0,  1714043,  151295137,
+7901906,  6002103,  229949260,  0,  0,  1772718,  151630881,
+7497006,  5673756,  230296450,  0,  0,  1770930,  151678544,
+28927423,  25279171,  688608168,  0,  0,  11575060,  675858738,
+29365073,  26334382,  684603645,  0,  0,  11666212,  676354133,
+29670926,  27033019,  686980664,  0,  0,  12595033,  675547257,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:128
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+3882120,  4254306,  98083223,  0,  0,  4294228,  4820504,
+3864320,  2996091,  97217436,  0,  0,  500374,  4724394,
+3758083,  3320739,  97422646,  0,  0,  517673,  5264816,
+8061462,  6467182,  243180827,  0,  0,  1603310,  159639742,
+8308257,  6702961,  245225643,  0,  0,  1666086,  159648991,
+8388640,  6283043,  243785418,  0,  0,  1775688,  158869405,
+29844992,  25719295,  720661579,  0,  0,  11509666,  697429416,
+30077216,  26776816,  719512243,  0,  0,  11849145,  695753565,
+30322994,  27410862,  717857003,  0,  0,  13782854,  696518093,
+

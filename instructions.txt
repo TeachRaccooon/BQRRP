@@ -1,0 +1,109 @@
+-Dgpu_backend=none
+-Dbuild_tests=yes
+-DBLA_VENDOR=AOCL_mt
+-DRequireCUDA=ON
+
+# BLAS++ configuration
+cmake -DCMAKE_BUILD_TYPE=Release -Dblas_int=int64 -DBLAS_LIBRARIES='-lflame -lblis' -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/blaspp-install/ ../../lib/blaspp/
+cmake -DCMAKE_BUILD_TYPE=Release  -Dbuild_tests=yes -Dblas_int=int64 -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/blaspp-install/ ../../lib/blaspp/
+
+# LAPACK++ configuration
+cmake -DCMAKE_BUILD_TYPE=Release -DBLAS_LIBRARIES='-lflame -lblis'   -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/     -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/lapackpp-install  ../../lib/lapackpp/
+cmake -DCMAKE_BUILD_TYPE=Release -Dbuild_tests=yes  -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/     -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/lapackpp-install  ../../lib/lapackpp/
+
+# RandLAPACK configuration
+cmake -DCMAKE_BUILD_TYPE=Release -Dbuild_tests=yes -DRequireCUDA=ON -Dlapackpp_DIR=$PROJECT_ROOT/install/lapackpp-install/lib64/cmake/lapackpp/ -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/  -DRandom123_DIR=$PROJECT_ROOT/install/random123-install/include/   -DCMAKE_BINARY_DIR=`pwd`     -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/RandLAPACK-install     ../../lib/RandLAPACK/
+
+# RandLAPACK benchmark configuration
+cmake -DCMAKE_BUILD_TYPE=Release  -DRandLAPACK_DIR=$PROJECT_ROOT/install/RandLAPACK-install/lib64/cmake/ -Dlapackpp_DIR=$PROJECT_ROOT/install/lapackpp-install/lib64/cmake/lapackpp/ -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/ -DRandom123_DIR=$PROJECT_ROOT/install/random123-install/include/ -DCMAKE_BINARY_DIR=`pwd`     ../../lib/RandLAPACK/benchmark/
+
+
+#02/25/2025 PLAN FOR BENCHMARKING:
+
+# Need to check how BQRRP is doing on the matrices of the below small sizes & which block size is best to use in such cases.
+# We want the b_sz=n/32 to hold as best block size to numcols ratio in the ideal case.
+
+# HQRRP remake plots
+numactl --interleave=all env OMP_NUM_THREADS=1 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=4 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=8 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=16 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=32 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=64 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=224 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_mat_size 20 128 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;
+
+# BQRRP components plots
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_subroutines_speed 3 65536 256 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_subroutines_speed 3 64000 250 500 1000 2000 4000 8000;
+
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_runtime_breakdown cholqr 3 65536 65536 256 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_runtime_breakdown geqrf 3 65536 65536 256 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_runtime_breakdown cholqr 3 64000 64000 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_runtime_breakdown geqrf 3 64000 64000 250 500 1000 2000 4000 8000;
+
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 65536 65536 256 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 64000 64000 250 500 1000 2000 4000 8000;
+
+# BQRRP performance conclusion plots
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 1024 1024 8 16 32 64 128 256 512 1024;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 2048 2048 8 16 32 64 128 256 512 1024 2048;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 4096 4096 8 16 32 64 128 256 512 1024 2048 4096;
+
+numactl --interleave=all env OMP_NUM_THREADS=1 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=4 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=8 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=16 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=32 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=64 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=224 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_mat_size 3 0 8192 16384 32768;
+
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 1000 1000 5 10 25 50 125 250 500 1000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 2000 2000 5 10 25 50 125 250 500 1000 2000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_block_size 3 4000 4000 5 10 25 50 125 250 500 1000 2000 4000;
+
+numactl --interleave=all env OMP_NUM_THREADS=1 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=4 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=8 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=16 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=32 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=64 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=224 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+
+# HQRRP supplementary investigation plots
+numactl --interleave=all env OMP_NUM_THREADS=1 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=4 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=8 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=16 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=32 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=64 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=224 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
+
+ctest -R BQRRP_GPU_block_sizes_powers_of_two_16k;
+ctest -R BQRRP_GPU_block_sizes_powers_of_two_8k;
+ctest -R BQRRP_GPU_block_sizes_powers_of_two_4k;
+ctest -R BQRRP_GPU_block_sizes_powers_of_two_2k;
+
+
+// SEPARATE HQRRP BENCHMARKS - DO JUST QRF AND QP3
+
+numactl --interleave=all env OMP_NUM_THREADS=1 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+numactl --interleave=all env OMP_NUM_THREADS=4 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+numactl --interleave=all env OMP_NUM_THREADS=8 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+numactl --interleave=all env OMP_NUM_THREADS=16 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+numactl --interleave=all env OMP_NUM_THREADS=32 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+numactl --interleave=all env OMP_NUM_THREADS=64 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+
+
+
+
+
+
