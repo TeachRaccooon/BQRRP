@@ -5,18 +5,18 @@ function[] = hqrrp_performance_varying_block_size()
     rows = 32000;
     cols = 32000;
 
-    num_thread_nums = 7;
+    num_thread_nums = 5;
     num_block_sizes = 11;
     num_iters = 3;
     num_algs = 7;
 
     show_labels = 0;
     plot_position = 1;
-    y_lim = [90, 400, 800, 1600, 2800, 3800, 4200];
+    y_lim = [90, 400, 1600, 3800, 4200];
 
     % Vertically stacking 65k adn 64k data
     % Horizontally stacking Intel and AMD machines
-    tiledlayout(7, 2,"TileSpacing","compact")
+    tiledlayout(5, 2,"TileSpacing","compact")
     for i = 1:num_thread_nums
         nexttile
         process_and_plot(Data_in_Intel(((i-1)*num_block_sizes*num_iters+1):(i*num_block_sizes*num_iters),:), num_block_sizes, num_iters, num_algs, rows, cols, plot_position, show_labels, y_lim(1, i));
@@ -56,7 +56,8 @@ function[] = process_and_plot(Data_in, num_block_sizes, num_iters, num_algs, row
     loglog(x, Data_out(:, 3), '  ', 'Color', 'blue', "MarkerSize", 18,'LineWidth', 1.8)    % GEQP3
 
     xlim([5 8000]);
-    %ylim([0 y_lim]);
+    ylim([0 y_lim]);
+    yticks([0, 50, 150, 250, 500, 4000]);
     ax = gca;
     ax.XAxis.FontSize = 20;
     ax.YAxis.FontSize = 20;
@@ -90,10 +91,10 @@ function[] = process_and_plot(Data_in, num_block_sizes, num_iters, num_algs, row
             lgd=legend('HQRRP', 'GEQRF', 'GEQP3');
             lgd.FontSize = 20;
             legend('Location','northeastoutside'); 
-        case 13
+        case 9
             xticks([5, 10, 25, 50, 125, 250, 500, 1000, 2000, 4000, 8000]);
             xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
-        case 14
+        case 10
             xticks([5, 10, 25, 50, 125, 250, 500, 1000, 2000, 4000, 8000]);
             xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
     end

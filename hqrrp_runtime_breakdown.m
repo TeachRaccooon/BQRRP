@@ -5,12 +5,12 @@ function[] = hqrrp_runtime_breakdown()
     
     num_block_sizes = 11;
     numiters = 3;
-    num_thread_nums = 7;
-    show_labels = 1;
+    num_thread_nums = 5;
+    show_labels = 0;
     plot_position = 1;
     
     % Horizontally stacking Intel and AMD machines
-    tiledlayout(7, 2,"TileSpacing","tight")
+    tiledlayout(5, 2,"TileSpacing","tight")
     for i = 1:num_thread_nums
         nexttile
         process_and_plot(Data_in_Intel(((i-1) * numiters * num_block_sizes + 1):i * numiters * num_block_sizes,:), num_block_sizes, numiters, plot_position, show_labels)
@@ -138,12 +138,12 @@ function[] = process_and_plot(Data_in, num_block_sizes, numiters, plot_position,
     switch plot_position
         case 2
             set(gca,'Yticklabel',[])
-            lgd=legend('Other', 'QR other', 'QRCP other', 'update M', 'QR compute H', 'QR compute T', 'QRCP compute H', 'QRCP pivoting');
+            lgd=legend('Other', 'QR other', 'QRCP other', 'update M', 'QR apply H', 'QR compute T', 'QRCP apply H', 'QRCP pivoting');
             lgd.FontSize = 20;
             legend('Location','northeastoutside'); 
-        case 13
+        case 9
             xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
-        case 14
+        case 10
             xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
     end
 end

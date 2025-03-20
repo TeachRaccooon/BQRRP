@@ -1,0 +1,19 @@
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:448
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 64000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+16465851,  12451706,  13058460,  0,  0,  2096306,  17343225,
+15720338,  12346695,  13617344,  0,  0,  1366479,  17388569,
+16197500,  12282376,  13293263,  0,  0,  1479834,  17445199,
+25878951,  22107076,  33248523,  0,  0,  3014101,  124238625,
+26443073,  21256832,  31026961,  0,  0,  2680156,  124486773,
+25742786,  22051947,  31446015,  0,  0,  2368195,  124518226,
+49814737,  29981468,  111710080,  0,  0,  9078442,  876432560,
+47159355,  28094080,  106461065,  0,  0,  7017769,  876270995,
+50278644,  31695312,  110624393,  0,  0,  6239574,  878594920,
+118813430,  74242397,  425573185,  0,  0,  26336398,  6966803604,
+118051214,  83634645,  429865629,  0,  0,  26198790,  6973421200,
+117310843,  77784146,  428886491,  0,  0,  26074217,  6965135236,
+Total benchmark execution time:26935904287

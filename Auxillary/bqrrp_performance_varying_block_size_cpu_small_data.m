@@ -1,27 +1,32 @@
 function[] = bqrrp_performance_varying_block_size_cpu_small_data()
-    Data_in_Intel = readfile('2025_02_28_BQRRP_speed_comparisons_block_size_num_info_lines_7.txt', 7);
-    Data_in_AMD = readfile('2025_03_06_BQRRP_speed_comparisons_block_size_num_info_lines_7.txt', 7);
+    Data_in_Intel = readfile('2025_03_17_BQRRP_speed_comparisons_block_size_num_info_lines_7.txt', 7);
+    Data_in_AMD = readfile('2025_03_01_BQRRP_speed_comparisons_block_size_num_info_lines_7.txt', 7);
 
-    rows = 1024;
-    cols = 1024;
+    rows = 1000;
+    cols = 1000;
 
     num_block_sizes = 8;
     num_iters = 3;
     num_algs = 7;
     num_mat_sizes = 3;
 
-    labels = 0;
+    show_labels = 0;
+    plot_position = 1; 
+    y_lim = [200, 320, 810];
 
     % Horizontally stacking Intel and AMD machines
     tiledlayout(3, 2,"TileSpacing","tight")
     data_start = 1;
     data_end   = num_block_sizes*num_iters;
+
     for i = 1:num_mat_sizes
         nexttile
         Data_in_Intel(data_start:data_end,:)
-        process_and_plot(Data_in_Intel(data_start:data_end,:), num_block_sizes, num_iters, num_algs, rows, cols, 1, 0, labels)
+        process_and_plot(Data_in_Intel(data_start:data_end,:), num_block_sizes, num_iters, num_algs, rows, cols, plot_position, show_labels, y_lim(1, i));
+        plot_position = plot_position + 1;
         nexttile
-        process_and_plot(Data_in_AMD(data_start:data_end,:), num_block_sizes, num_iters, num_algs, rows, cols, 1, 0, labels)
+        process_and_plot(Data_in_AMD(data_start:data_end,:), num_block_sizes, num_iters, num_algs, rows, cols, plot_position, show_labels, y_lim(1, i));
+        plot_position = plot_position + 1;
         data_start = data_end + 1;
         num_block_sizes = num_block_sizes + 1;
         data_end   = data_end + num_block_sizes*num_iters; 
@@ -31,7 +36,7 @@ function[] = bqrrp_performance_varying_block_size_cpu_small_data()
 end
 
 
-function[] = process_and_plot(Data_in, num_block_sizes, num_iters, num_algs, rows, cols, titles, row, labels)
+function[] = process_and_plot(Data_in, num_block_sizes, num_iters, num_algs, rows, cols, plot_position, show_labels, y_lim)
 
     Data_in = data_preprocessing_best(Data_in, num_block_sizes, num_iters, num_algs);
 
@@ -82,46 +87,63 @@ function[] = process_and_plot(Data_in, num_block_sizes, num_iters, num_algs, row
     hold on
     loglog(x, Data_out(:, 7), '  ', 'Color', 'blue', "MarkerSize", 18,'LineWidth', 1.8)    % GEQP3
 
+    switch rows
+        case 4096
+            xlim([8 4096]);
+        case 4000
+            xlim([5 4000]);
+        case 2048
+            xlim([8 2048]);
+        case 2000
+            xlim([5 2000]);
+        case 1024
+            xlim([8 1024]);
+        case 1000
+            xlim([5 1000]);
+    end
 
     xticks(x)
     yticks([1 10 50 100 250 500])
 
-    xlim([min(x) max(x)]);
-    ylim([0 600]);
-  
+    ylim([0 y_lim]);
     ax = gca;
     ax.XAxis.FontSize = 20;
     ax.YAxis.FontSize = 20;
     grid on
 
-    if ~titles
-        set(gca,'Yticklabel',[])
-    end
-    if row
-        if labels
-            xlabel('block size', 'FontSize', 20); 
-        end
-    else 
-        %set(gca,'Xticklabel',[])
-    end
-    if ~row && ~titles 
-        lgd=legend('BQRRP\_CQR', 'BQRRP\_HQR', 'HQRRP', 'GEQRF', 'GEQP3');
-        lgd.FontSize = 20;
-        legend('Location','northeastoutside');
-        if labels
-            title('AMD ...', 'FontSize', 20);
+  
+    if show_labels 
+        switch plot_position
+            case 1
+                title('Intel CPU', 'FontSize', 20);
+                ylabel('dim = 65,536; GigaFLOP/s', 'FontSize', 20);
+            case 2
+                title('AMD CPU', 'FontSize', 20);
+            case 3
+                ylabel('dim = 64,000; GigaFLOP/s', 'FontSize', 20); 
+                xlabel('block size', 'FontSize', 20); 
+            case 4
+                xlabel('block size', 'FontSize', 20); 
         end
     end
-    if ~row && titles
-            if labels
-                title('Intel Xeon Platinum 8462Y+', 'FontSize', 20);
-                ylabel('65k data // GigaFLOP/s', 'FontSize', 20);
-            end
-    end
-    if titles && row
-        if labels
-            ylabel('32k data // GigaFLOP/s', 'FontSize', 20);
-        end
+    switch plot_position
+        case 1
+            xticklabels({'', '10', '', '50', '', '250', '', '1000'})
+        case 2
+            set(gca,'Yticklabel',[])
+            lgd=legend('BQRRP\_CQR', 'BQRRP\_HQR', 'HQRRP', 'GEQRF', 'GEQP3');
+            lgd.FontSize = 20;
+            legend('Location','northeastoutside'); 
+            xticklabels({'', '10', '', '50', '', '250', '', '1000'})
+        case 3
+            xticklabels({'', '10', '', '50', '', '250', '', '1000', ''})
+        case 4
+            xticklabels({'', '10', '', '50', '', '250', '', '1000', ''})
+        case 5
+            xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
+        case 6
+            set(gca,'Yticklabel',[])
+            xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
     end
 end
 

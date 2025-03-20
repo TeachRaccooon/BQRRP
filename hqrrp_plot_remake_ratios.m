@@ -3,7 +3,7 @@ function[] = hqrrp_plot_remake_ratios()
     Data_in_AMD_MKL  = readfile('Data_in/2025_02/Zen4c/BQRRP_speed_comparisons_mat_size/2025_02_25_BQRRP_speed_comparisons_mat_size_num_info_lines_7.txt', 7);
     Data_in_Intel    = readfile('Data_in/2025_02/SapphireRapids/BQRRP_speed_comparisons_mat_size/2025_02_20_BQRRP_speed_comparisons_mat_size_num_info_lines_7.txt', 7);
     
-    num_thread_nums = 7;
+    num_thread_nums = 5;
     num_mat_sizes   = 10;
     num_iters       = 20;
     num_algs        = 7;
@@ -23,7 +23,7 @@ function[] = hqrrp_plot_remake_ratios()
     figure;
     tiledlayout(num_plot_rows, num_plot_cols, "TileSpacing", "tight");
     process_and_plot(Data_in_Intel, num_thread_nums, num_mat_sizes, num_iters, num_algs, plot_num_Intel, show_labels, num_plot_rows, num_plot_cols);
-    process_and_plot(Data_in_AMD_MKL, num_thread_nums+2, num_mat_sizes, num_iters, num_algs, plot_num_AMD_MKL, show_labels, num_plot_rows, num_plot_cols);
+    process_and_plot(Data_in_AMD_MKL, num_thread_nums+1, num_mat_sizes, num_iters, num_algs, plot_num_AMD_MKL, show_labels, num_plot_rows, num_plot_cols);
     %process_and_plot(Data_in_AMD_AOCL, num_thread_nums+1, num_mat_sizes, num_iters, num_algs, plot_num_AMD_AOCL, show_labels, num_plot_rows, num_plot_cols);
 end
 
@@ -42,7 +42,7 @@ function[] = process_and_plot(Data_in, num_thread_nums, num_mat_sizes, num_iters
         % has already been proessed to inlude only the "best" iteration).
         rb_start = num_mat_sizes*(j-1)+1;
         rb_end   = num_mat_sizes*j;
-        Data_in_processed(rb_start:rb_end,:) = data_preprocessing_avg(Data_in((num_iters*num_mat_sizes*(j-1)+1):(num_iters*num_mat_sizes*j),:), num_mat_sizes, num_iters, num_algs); %#ok<AGROW>
+        Data_in_processed(rb_start:rb_end,:) = data_preprocessing_best(Data_in((num_iters*num_mat_sizes*(j-1)+1):(num_iters*num_mat_sizes*j),:), num_mat_sizes, num_iters, num_algs); %#ok<AGROW>
 
         Data_out(rb_start:rb_end,1) = Data_in_processed(rb_start:rb_end, 7) ./ Data_in_processed(rb_start:rb_end, 3); %#ok<AGROW> % GEQP3 time / HQRRP time
         Data_out(rb_start:rb_end,2) = Data_in_processed(rb_start:rb_end, 7) ./ Data_in_processed(rb_start:rb_end, 6); %#ok<AGROW> % GEQP3 time / GEQRF time
@@ -73,7 +73,7 @@ end
 
 function[] = plot_config(plot_num, y_min_lim, y_max_lim, y_ticks, show_labels, num_plot_rows, num_plot_cols)
     if plot_num == num_plot_cols
-        lgd=legend('1 thread', '4 threads', '8 threads', '16 threads', '32 threads', '64 threads', '128 threads', '224 threads', '448 threads');
+        lgd=legend('1 thread', '4 threads', '16 threads', '64 threads', '128 threads', '448 threads');
         lgd.FontSize = 20;
         legend('Location','northeastoutside');
     end

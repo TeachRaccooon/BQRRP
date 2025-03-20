@@ -73,7 +73,7 @@ numactl --interleave=all env OMP_NUM_THREADS=32 ./BQRRP_speed_comparisons_mat_si
 numactl --interleave=all env OMP_NUM_THREADS=64 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
 numactl --interleave=all env OMP_NUM_THREADS=128 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
 numactl --interleave=all env OMP_NUM_THREADS=224 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
-numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=448 ./BQRRP_speed_comparisons_mat_size 3 0 8000 16000 32000 64000;
 
 # HQRRP supplementary investigation plots
 numactl --interleave=all env OMP_NUM_THREADS=1 ./HQRRP_runtime_breakdown 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;
@@ -101,6 +101,35 @@ numactl --interleave=all env OMP_NUM_THREADS=16 ./BQRRP_speed_comparisons_mat_si
 numactl --interleave=all env OMP_NUM_THREADS=32 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
 numactl --interleave=all env OMP_NUM_THREADS=64 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
 numactl --interleave=all env OMP_NUM_THREADS=128 ./BQRRP_speed_comparisons_mat_size 3 0 32000;
+
+
+
+
+
+
+
+// CQRRPT STUFF
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 131072 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 65536 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 32768 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 16384 512 1024 2048 4096 8192;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 8192 512 1024 2048 4096 8192;
+
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_runtime_breakdown 3 131072 512 1024 2048 4096 8192;
+
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 130000 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 64000 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 32000 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 16000 500 1000 2000 4000 8000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 8000 500 1000 2000 4000 8000;
+
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_runtime_breakdown 3 130000 500 1000 2000 4000 8000;
+
+
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 1000000 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_runtime_breakdown 3 1000000 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_speed_comparisons 3 1000000 5 10 25 50 125 250 500 1000 2000 4000 8000 16000 32000;
+numactl --interleave=all env OMP_NUM_THREADS=128 ./CQRRPT_runtime_breakdown 3 1000000 5 10 25 50 125 250 500 1000 2000 4000 8000 16000 32000;
 
 
 

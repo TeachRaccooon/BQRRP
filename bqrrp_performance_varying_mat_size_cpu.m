@@ -7,20 +7,20 @@ function[] = bqrrp_performance_varying_mat_size_cpu()
     rows = 8000;
     cols = 8000;
 
-    num_thread_nums = 7;
+    num_thread_nums = 5;
     num_mat_sizes = 3;
     num_iters = 3;
     num_algs = 7;
 
     show_labels = 0;
-    y_lim = [100, 500, 800, 1600, 2800, 3800, 4200];
+    y_lim = [100, 500, 1600, 3800, 4200];
     plot_position = 1;
 
     size(Data_in_Intel)
     size(Data_in_AMD)
 
     %128 threads - 1 thread
-    tiledlayout(7, 2,"TileSpacing","compact")
+    tiledlayout(5, 2,"TileSpacing","compact")
     for i = 1:num_thread_nums
         nexttile
         process_and_plot(Data_in_Intel(num_mat_sizes*num_iters*(i-1)+1:num_mat_sizes*num_iters*i,:), num_mat_sizes, num_iters, num_algs, rows, cols, plot_position, show_labels, y_lim(:,i))
@@ -96,15 +96,17 @@ function[] = process_and_plot(Data_in, num_mat_sizes, num_iters, num_algs, rows,
         set(gca,'Yticklabel',[])
     end
     switch plot_position
-        case 10
+        case 2
             set(gca,'Yticklabel',[])
             lgd=legend('BQRRP\_CQR', 'BQRRP\_HQR', 'HQRRP', 'GEQRF', 'GEQP3');
             lgd.FontSize = 20;
             legend('Location','northeastoutside'); 
-        case 13
+        case 9
+            xtickangle(45);
             xticks([8000 16000 32000]);
             xticklabels({'8000', '16000', '32000'})
-        case 14
+        case 10
+            xtickangle(45);
             xticks([8000 16000 32000]);
             xticklabels({'8000', '16000', '32000'})
     end
