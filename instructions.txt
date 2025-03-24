@@ -1,21 +1,29 @@
--Dgpu_backend=none
--Dbuild_tests=yes
--DBLA_VENDOR=AOCL_mt
--DRequireCUDA=ON
 
-# BLAS++ configuration
-cmake -DCMAKE_BUILD_TYPE=Release -Dblas_int=int64 -DBLAS_LIBRARIES='-lflame -lblis' -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/blaspp-install/ ../../lib/blaspp/
-cmake -DCMAKE_BUILD_TYPE=Release  -Dbuild_tests=yes -Dblas_int=int64 -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/blaspp-install/ ../../lib/blaspp/
 
-# LAPACK++ configuration
-cmake -DCMAKE_BUILD_TYPE=Release -DBLAS_LIBRARIES='-lflame -lblis'   -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/     -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/lapackpp-install  ../../lib/lapackpp/
-cmake -DCMAKE_BUILD_TYPE=Release -Dbuild_tests=yes  -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/     -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/lapackpp-install  ../../lib/lapackpp/
 
-# RandLAPACK configuration
-cmake -DCMAKE_BUILD_TYPE=Release -Dbuild_tests=yes -DRequireCUDA=ON -Dlapackpp_DIR=$PROJECT_ROOT/install/lapackpp-install/lib64/cmake/lapackpp/ -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/  -DRandom123_DIR=$PROJECT_ROOT/install/random123-install/include/   -DCMAKE_BINARY_DIR=`pwd`     -DCMAKE_INSTALL_PREFIX=$PROJECT_ROOT/install/RandLAPACK-install     ../../lib/RandLAPACK/
 
-# RandLAPACK benchmark configuration
-cmake -DCMAKE_BUILD_TYPE=Release  -DRandLAPACK_DIR=$PROJECT_ROOT/install/RandLAPACK-install/lib64/cmake/ -Dlapackpp_DIR=$PROJECT_ROOT/install/lapackpp-install/lib64/cmake/lapackpp/ -Dblaspp_DIR=$PROJECT_ROOT/install/blaspp-install/lib64/cmake/blaspp/ -DRandom123_DIR=$PROJECT_ROOT/install/random123-install/include/ -DCMAKE_BINARY_DIR=`pwd`     ../../lib/RandLAPACK/benchmark/
+mkdir -p "$PROJECT_DIR/build/benchmark-build/benchmark-output"
+BENCHMARK_OUTPUT_DIR = "$PROJECT_DIR/build/benchmark-build/benchmark-output"
+echo "Directory created at: $PROJECT_DIR/build/benchmark-build/benchmark-output"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #02/25/2025 PLAN FOR BENCHMARKING:
