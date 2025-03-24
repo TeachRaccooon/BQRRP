@@ -17,6 +17,9 @@ if [[ ! -d "$BENCHMARK_OUTPUT_DIR" ]]; then
     echo "Adding variable $BENCHMARK_OUTPUT_DIR to ~/.bashrc."
     echo "#Added via run_randlapack_benhcmarks.sh" >> ~/.bashrc
     echo "export BENCHMARK_OUTPUT_DIR=\"$RANDNLA_PROJECT_DIR/build/benchmark-build/benchmark-output\"" >> ~/.bashrc
+    # Reload bashrc to make the new variable visible
+    #bash -c "source setvars.sh --force && source ~/.bashrc && exec bash"
+    bash -c "source ~/.bashrc && exec bash"
 fi
 
 # Attempt to grab the CPU name
