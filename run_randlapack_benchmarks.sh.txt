@@ -15,7 +15,8 @@ if [[ ! -d "$BENCHMARK_OUTPUT_DIR" ]]; then
     # We need to add the BENCHMARK_OUTPUT_DIR variable to bashrc in order to avoid potentially 
     # re-writing all of the previsouly-gatherred benchmarking data.
     echo "Adding variable $BENCHMARK_OUTPUT_DIR to ~/.bashrc."
-    echo "export $BENCHMARK_OUTPUT_DIR=\"$RANDNLA_PROJECT_DIR/build/benchmark-build/benchmark-output\"" >> ~/.bashrc
+    echo "#Added via run_randlapack_benhcmarks.sh" >> ~/.bashrc
+    echo "export BENCHMARK_OUTPUT_DIR=\"$RANDNLA_PROJECT_DIR/build/benchmark-build/benchmark-output\"" >> ~/.bashrc
 fi
 
 # Attempt to grab the CPU name
