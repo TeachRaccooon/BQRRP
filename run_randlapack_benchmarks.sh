@@ -6,6 +6,7 @@ if [[ -z "${RANDNLA_PROJECT_DIR}" ]]; then
     exit 1
 fi
 
+RELOAD_SHELL=0
 # Create the benchmark output directory if it does not exist
 if [[ ! -d "$BENCHMARK_OUTPUT_DIR" ]]; then
     mkdir -p "$RANDNLA_PROJECT_DIR/build/benchmark-build/benchmark-output"
@@ -17,6 +18,7 @@ if [[ ! -d "$BENCHMARK_OUTPUT_DIR" ]]; then
     echo "Adding variable $BENCHMARK_OUTPUT_DIR to ~/.bashrc."
     echo "#Added via run_randlapack_benhcmarks.sh" >> ~/.bashrc
     echo "export BENCHMARK_OUTPUT_DIR=\"$RANDNLA_PROJECT_DIR/build/benchmark-build/benchmark-output\"" >> ~/.bashrc
+    RELOAD_SHELL=1
 fi
 
 # Attempt to grab the CPU name
@@ -71,11 +73,50 @@ if [[ ! -d "$CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular" ]]; then
     echo "Directory created at: $CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular"
 fi
 
-# Ask the user if they want to continue or terminate the script
+# GPU prepwork and benchmarking
+if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
+
+    GPU_NAME=$(lspci | grep -i 'vga\|3d\|display' | awk -F ': ' '{print $2}')
+    GPU_DIR="$BENCHMARK_OUTPUT_DIR/$GPU_NAME"
+    # Create the directory named after the current GPU 
+    if [[ ! -d "$$GPU_DIR" ]]; then
+        mkdir -p "$GPU_DIR"
+        echo "Directory created at: $GPU_DIR"
+    fi
+    if [[ ! -d "$GPU_DIR/BQRRP_runtime_breakdown_gpu" ]]; then
+        mkdir -p "$GPU_DIR/BQRRP_runtime_breakdown_gpu"
+        echo "Directory created at: $GPU_DIR/BQRRP_runtime_breakdown_gpu"
+    fi
+    if [[ ! -d "$GPU_DIR/BQRRP_speed_comparisons_block_size_gpu" ]]; then
+        mkdir -p "$GPU_DIR/BQRRP_speed_comparisons_block_size_gpu"
+        echo "Directory created at: $GPU_DIR/BQRRP_speed_comparisons_block_size_gpu"
+    fi
+
+    # Ask the user if they want to continue or skip GPU benchmarks
+    read -p "RandLAPACK appears to have been built with GPU support. Commence BQRRP GPU benchmarking? (y/n): " user_input
+    if [[ "$user_input" != "y" && "$user_input" != "Y" ]]; then
+        echo "Skipping GPU benchmarks."
+    else
+        # As of early 2025, GPU benchmarks in RandLAPACK are integrated as part of the testing infactsructure.
+        # This shall change in the near future.
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_2k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_4k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_8k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_16k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_32k"
+        echo -e "GPU benchmarks complete\n"
+
+        # Move the GPU benchmarks results into an appropriate directory
+        mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_runtime_breakdown_qrf*        $GPU_DIR/BQRRP_speed_comparisons_block_size_gpu/
+        mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_runtime_breakdown_cholqr*     $GPU_DIR/BQRRP_runtime_breakdown_gpu/
+        mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_speed_comparisons_block_size* $GPU_DIR/BQRRP_runtime_breakdown_gpu/
+    fi
+fi
+
+# Ask the user if they want to continue or skip CPU benchmarks
 read -p "Directory structure preparation complete. Commence BQRRP CPU benchmarking? (y/n): " user_input
 if [[ "$user_input" != "y" && "$user_input" != "Y" ]]; then
     echo "Skipping CPU benchmarks."
-    exit 1
 else
     # PRELIMINARY INFO GATHERING BEFORE RUNNING BENCHMAKRS
     # Set the list of the numbers of threads that will be used in our CPU benchmarks
@@ -109,7 +150,11 @@ else
             read -p "Without numactl, algorithms performance may vary greatly from that reported in the BQRRP paper. Continue anyway? (y/n): " user_input
             if [[ "$user_input" != "y" && "$user_input" != "Y" ]]; then
                 echo "Skipping CPU benchmarks. Please install numactl."
-            exit 1
+                if [ $RELOAD_SHELL -eq 1 ]; then
+                    # Source from bash and spawn a new shell so that the variable change takes place
+                    bash -c "source ~/.bashrc && exec bash"
+                fi
+                exit 1
             fi
         fi
     fi
@@ -193,5 +238,7 @@ else
     echo -e "BQRRP performance varying mat size rectangular: tall and wide complete\n"
 fi
 
-# Source from bash and spawn a new shell so that the variable change takes place
-bash -c "source ~/.bashrc && exec bash"
+if [ $RELOAD_SHELL -eq 1 ]; then
+    # Source from bash and spawn a new shell so that the variable change takes place
+    bash -c "source ~/.bashrc && exec bash"
+fi
