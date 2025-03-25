@@ -110,6 +110,7 @@ if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
         mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_speed_comparisons_block_size* $GPU_DIR/BQRRP_speed_comparisons_block_size_gpu/
         mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_runtime_breakdown_cholqr*     $GPU_DIR/BQRRP_runtime_breakdown_gpu/
         mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/fiBQRRP_GPU_runtime_breakdown_qrf*      $GPU_DIR/BQRRP_runtime_breakdown_gpu/
+    fi
 fi
 
 # Ask the user if they want to continue or skip CPU benchmarks
