@@ -121,7 +121,7 @@ else
     # PRELIMINARY INFO GATHERING BEFORE RUNNING BENCHMAKRS
     # Set the list of the numbers of threads that will be used in our CPU benchmarks
     # Check the number of CPU sockets
-    #CPU_SOCKETS=$(awk -F': ' '/physical id/ { print $2 }' /proc/cpuinfo | sort -u | wc -l)
+    CPU_SOCKETS=$(awk -F': ' '/physical id/ { print $2 }' /proc/cpuinfo | sort -u | wc -l)
     # Determine the maximum number of OpenMP threads that can be used on a given system
     #MAX_THREADS=$((2 * CPU_SOCKETS * $(nproc --all)))
     MAX_THREADS=$(nproc --all)
