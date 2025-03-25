@@ -76,7 +76,7 @@ fi
 # GPU prepwork and benchmarking
 if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
 
-    GPU_NAME=$(lspci | grep -i 'vga\|3d\|display' | awk -F ': ' '{print $2}')
+    GPU_NAME=$(lspci | grep -i 'vga\|3d\|display' | awk -F ': ' '{print $2}' | tr ' ' '_')
     GPU_DIR="$BENCHMARK_OUTPUT_DIR/$GPU_NAME"
     # Create the directory named after the current GPU 
     if [[ ! -d "$$GPU_DIR" ]]; then
