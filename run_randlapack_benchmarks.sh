@@ -26,12 +26,12 @@ CPU_NAME=$(lscpu | grep "Model name" | awk -F ': ' '{print $2}' | tr -d '[:punct
 # Check if the CPU name was retrieved successfully
 if [[ -z "$CPU_NAME" ]]; then
     echo "Failed to retrieve CPU name. Naming it after today's date."
-    CPU_NAME=$(date +"%Y-%m-%d")
+    CPU_NAME=$(date +"%Y-%m-%d_CPU")
 fi
 CPU_DIR="$BENCHMARK_OUTPUT_DIR/$CPU_NAME"
 
 # Create the directory named after the current CPU 
-if [[ ! -d "$$CPU_DIR" ]]; then
+if [[ ! -d "$CPU_DIR" ]]; then
     mkdir -p "$CPU_DIR"
     echo "Directory created at: $CPU_DIR"
 fi
@@ -76,10 +76,10 @@ fi
 # GPU prepwork and benchmarking
 if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
 
-    GPU_NAME=$(lspci | grep -i 'vga\|3d\|display' | awk -F ': ' '{print $2}' | tr ' ' '_')
+    GPU_NAME=$(lspci | grep -i 'vga\|3d\|display' | head -n 1 | awk -F ': ' '{print $2}' | tr -d '[:punct:]' | tr ' ' '_')
     GPU_DIR="$BENCHMARK_OUTPUT_DIR/$GPU_NAME"
     # Create the directory named after the current GPU 
-    if [[ ! -d "$$GPU_DIR" ]]; then
+    if [[ ! -d "$GPU_DIR" ]]; then
         mkdir -p "$GPU_DIR"
         echo "Directory created at: $GPU_DIR"
     fi
@@ -100,10 +100,10 @@ if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
         # As of early 2025, GPU benchmarks in RandLAPACK are integrated as part of the testing infactsructure.
         # This shall change in the near future.
         ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_2k"
-        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_4k"
-        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_8k"
-        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_16k"
-        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_32k"
+        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_4k"
+        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_8k"
+        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_16k"
+        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_32k"
         echo -e "GPU benchmarks complete\n"
 
         # Move the GPU benchmarks results into an appropriate directory
