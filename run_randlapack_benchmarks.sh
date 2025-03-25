@@ -109,7 +109,7 @@ if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
         # Move the GPU benchmarks results into an appropriate directory
         mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_speed_comparisons_block_size* $GPU_DIR/BQRRP_speed_comparisons_block_size_gpu/
         mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_runtime_breakdown_cholqr*     $GPU_DIR/BQRRP_runtime_breakdown_gpu/
-        mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/fiBQRRP_GPU_runtime_breakdown_qrf*      $GPU_DIR/BQRRP_runtime_breakdown_gpu/
+        mv $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/test/BQRRP_GPU_runtime_breakdown_qrf*        $GPU_DIR/BQRRP_runtime_breakdown_gpu/
     fi
 fi
 
@@ -121,7 +121,7 @@ else
     # PRELIMINARY INFO GATHERING BEFORE RUNNING BENCHMAKRS
     # Set the list of the numbers of threads that will be used in our CPU benchmarks
     # Check the number of CPU sockets
-    CPU_SOCKETS=$(grep -c 'physical id' /proc/cpuinfo)
+    CPU_SOCKETS=$(awk -F': ' '/physical id/ { print $2 }' /proc/cpuinfo | sort -u | wc -l)
     # Determine the maximum number of OpenMP threads that can be used on a given system
     MAX_THREADS=$((2 * CPU_SOCKETS * $(nproc --all)))
     
@@ -143,7 +143,7 @@ else
     if [[ $CPU_SOCKETS -gt 1 ]]; then 
         # Check if numactl is available
         if command -v numactl &> /dev/null; then
-            NUMACTL_VAR = "numactl --interleave=all"
+            NUMACTL_VAR="numactl --interleave=all"
             echo "numactl is installed."
         else
             echo "numactl is not installed"
