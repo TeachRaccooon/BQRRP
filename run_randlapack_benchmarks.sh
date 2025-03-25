@@ -100,10 +100,10 @@ if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
         # As of early 2025, GPU benchmarks in RandLAPACK are integrated as part of the testing infactsructure.
         # This shall change in the near future.
         ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_2k"
-        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_4k"
-        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_8k"
-        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_16k"
-        #ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_32k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_4k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_8k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_16k"
+        ctest --test-dir $RANDNLA_PROJECT_DIR/build/RandLAPACK-build/ -R "BQRRP_GPU_block_sizes_powers_of_two_32k"
         echo -e "GPU benchmarks complete\n"
 
         # Move the GPU benchmarks results into an appropriate directory
