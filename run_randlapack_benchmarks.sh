@@ -124,7 +124,7 @@ else
     CPU_SOCKETS=$(awk -F': ' '/physical id/ { print $2 }' /proc/cpuinfo | sort -u | wc -l)
     # Determine the maximum number of OpenMP threads that can be used on a given system
     #MAX_THREADS=$((2 * CPU_SOCKETS * $(nproc --all)))
-    MAX_THREADS=$(nproc --all)
+    MAX_THREADS=$((2 * $(nproc --all)))
     
     THREADS_LIST=(1)
     # Exceptional case used for the AMD system with exceptionally large core count
