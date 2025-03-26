@@ -1,12 +1,7 @@
-function[] = hqrrp_plot_remake_flops()
-    Data_in_AMD_AOCL = readfile('Data_in/2025_02/Zen4c/BQRRP_speed_comparisons_mat_size/2025_02_22_BQRRP_speed_comparisons_mat_size_num_info_lines_7.txt', 7);
-    Data_in_AMD_MKL  = readfile('Data_in/2025_02/Zen4c/BQRRP_speed_comparisons_mat_size/2025_02_25_BQRRP_speed_comparisons_mat_size_num_info_lines_7.txt', 7);
-    Data_in_Intel    = readfile('Data_in/2025_02/SapphireRapids/BQRRP_speed_comparisons_mat_size/2025_02_20_BQRRP_speed_comparisons_mat_size_num_info_lines_7.txt', 7);
-    
-    num_thread_nums = 5;
-    num_mat_sizes   = 10;
-    num_iters       = 20;
-    num_algs        = 7;
+function[] = hqrrp_plot_remake_flops(filename_Intel, filename_AMD_AOCL, filename_AMD_MKL, num_mat_sizes, num_thread_nums, num_iters, num_algs, show_labels)
+    Data_in_Intel = readfile(filename_Intel, 7);
+    Data_in_AMD_AOCL = readfile(filename_AMD_AOCL, 7);
+    Data_in_AMD_MKL = readfile(filename_AMD_MKL, 7);
 
     % A way of ensuring that Intel plots are in the left column and AMD
     % plots are in the right ones
@@ -14,13 +9,10 @@ function[] = hqrrp_plot_remake_flops()
     plot_num_AMD_AOCL = 2;
     plot_num_AMD_MKL  = 3;
 
-    % Label controls
-    show_labels = 0;
     % Plot controls
     num_plot_rows = 3;
     num_plot_cols = 3;
 
-    figure;
     tiledlayout(num_plot_rows, num_plot_cols, "TileSpacing", "tight");
     process_and_plot(Data_in_Intel, num_thread_nums, num_mat_sizes, num_iters, num_algs, plot_num_Intel, show_labels, num_plot_rows, num_plot_cols);
     process_and_plot(Data_in_AMD_MKL, num_thread_nums+1, num_mat_sizes, num_iters, num_algs, plot_num_AMD_AOCL, show_labels, num_plot_rows, num_plot_cols);

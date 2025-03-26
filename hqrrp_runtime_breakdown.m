@@ -1,27 +1,23 @@
-function[] = hqrrp_runtime_breakdown()
-    % 65k DATA
-    Data_in_Intel = readfile('Data_in/2025_02/SapphireRapids/HQRRP_runtime_breakdown/2025_03_09_HQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    Data_in_AMD   = readfile('Data_in/2025_02/Zen4c/HQRRP_runtime_breakdown/2025_03_06_HQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
+function[] = hqrrp_runtime_breakdown(filename_Intel, filename_AMD, num_thread_nums, num_block_sizes, num_iters, show_labels)
     
-    num_block_sizes = 11;
-    numiters = 3;
-    num_thread_nums = 5;
-    show_labels = 0;
+    Data_in_Intel = readfile(filename_Intel, 7);
+    Data_in_AMD   = readfile(filename_AMD, 7);
+
     plot_position = 1;
     
     % Horizontally stacking Intel and AMD machines
     tiledlayout(5, 2,"TileSpacing","tight")
     for i = 1:num_thread_nums
         nexttile
-        process_and_plot(Data_in_Intel(((i-1) * numiters * num_block_sizes + 1):i * numiters * num_block_sizes,:), num_block_sizes, numiters, plot_position, show_labels)
+        process_and_plot(Data_in_Intel(((i-1) * num_iters * num_block_sizes + 1):i * num_iters * num_block_sizes,:), num_block_sizes, num_iters, plot_position, show_labels)
         plot_position = plot_position + 1;
         nexttile
-        process_and_plot(Data_in_AMD(((i-1) * numiters * num_block_sizes + 1):i * numiters * num_block_sizes,:), num_block_sizes, numiters, plot_position, show_labels)
+        process_and_plot(Data_in_AMD(((i-1) * num_iters * num_block_sizes + 1):i * num_iters * num_block_sizes,:), num_block_sizes, num_iters, plot_position, show_labels)
         plot_position = plot_position + 1;
     end
 end
-function[] = process_and_plot(Data_in, num_block_sizes, numiters, plot_position, show_labels)
-    Data_in = data_preprocessing_best(Data_in, num_block_sizes, numiters);
+function[] = process_and_plot(Data_in, num_block_sizes, num_iters, plot_position, show_labels)
+    Data_in = data_preprocessing_best(Data_in, num_block_sizes, num_iters);
 
     for i = 1:size(Data_in, 1)
         %{
@@ -112,22 +108,28 @@ function[] = process_and_plot(Data_in, num_block_sizes, numiters, plot_position,
     ylim([0 100]);
     ax = gca;
     ax.FontSize  = 20; 
-    
+
     if show_labels 
-        if mod(plot_position, 2)
-            ylabel('runtime (%)', 'FontSize', 20);
-        end
         switch plot_position
             case 1
+                ylabel('threads=1;runtime (%)', 'FontSize', 20);
                 title('Intel CPU', 'FontSize', 20);
             case 2
                 title('AMD CPU', 'FontSize', 20);
-            case 13
+            case 3
+                ylabel('threads=4;runtime (%)', 'FontSize', 20);
+            case 5
+                ylabel('threads=16;runtime (%)', 'FontSize', 20);
+            case 7
+                ylabel('threads=64;runtime (%)', 'FontSize', 20);
+            case 9
+                ylabel('threads=128;runtime (%)', 'FontSize', 20);
                 xlabel('block size', 'FontSize', 20); 
-            case 14
+            case 10
                 xlabel('block size', 'FontSize', 20); 
         end
     end
+
 
     if plot_position < 13
         set(gca,'Xticklabel',[])
@@ -147,15 +149,15 @@ function[] = process_and_plot(Data_in, num_block_sizes, numiters, plot_position,
             xticklabels({'', '10', '', '50', '', '250', '', '1000', '', '4000'})
     end
 end
-function[Data_out] = data_preprocessing_best(Data_in, num_col_sizes, numiters)
+function[Data_out] = data_preprocessing_best(Data_in, num_col_sizes, num_iters)
     
     Data_out = [];
     i = 1;
     Data_out = [];
-    while i < num_col_sizes * numiters
+    while i < num_col_sizes * num_iters
         best_speed = intmax;
         best_speed_idx = i;
-        for j = 1:numiters
+        for j = 1:num_iters
             if Data_in(i, 9) < best_speed
                 best_speed = Data_in(i, 9);
                 best_speed_idx = i;

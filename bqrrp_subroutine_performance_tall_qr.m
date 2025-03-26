@@ -1,27 +1,16 @@
-function[] = bqrrp_subroutine_performance_tall_qr()
-    Data_in_Intel_65k = readfile('Data_in/2025_02/SapphireRapids/BQRRP_subroutines_speed/2025_02_07_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
-    Data_in_Intel_64k = readfile('Data_in/2025_02/SapphireRapids/BQRRP_subroutines_speed/2025_02_15_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
-    % 224 threads
-    %Data_in_AMD_65k   = readfile('Data_in/2025_02/Zen4c/BQRRP_subroutines_speed/2025_02_26_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
-    %Data_in_AMD_64k   = readfile('Data_in/2025_02/Zen4c/BQRRP_subroutines_speed/2025_02_27_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
-    % 448 threads
-    Data_in_AMD_65k   = readfile('Data_in/2025_02/Zen4c/BQRRP_subroutines_speed/2025_03_01_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
-    Data_in_AMD_64k   = readfile('Data_in/2025_02/Zen4c/BQRRP_subroutines_speed/2025_03_02_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
+function[] = bqrrp_subroutine_performance_tall_qr(filename_Intel, filename_AMD, rows1, cols1, rows2, cols2, num_block_sizes, num_iters, num_algs, show_labels)
+    Data_in_Intel = readfile(filename_Intel, 10);
+    Data_in_AMD   = readfile(filename_AMD, 10);
 
-    rows1 = 2^16;
-    cols1 = 256;
-    rows2 = 64000;
-    cols2 = 250;
+    Data_in_Intel_65k = Data_in_Intel(1:3*num_block_sizes*num_iters,:);
+    Data_in_Intel_64k = Data_in_Intel(3*num_block_sizes*num_iters+1:end,:);
+    Data_in_AMD_65k   = Data_in_AMD(1:3*num_block_sizes*num_iters,:);
+    Data_in_AMD_64k   = Data_in_AMD(3*num_block_sizes*num_iters+1:end,:);
 
-    num_block_sizes = 6;
-    num_iters       = 3;
-    num_algs        = 12;
     Data_in_Intel_65k = Data_in_Intel_65k((num_block_sizes * num_iters)+1:(2 * num_block_sizes * num_iters), :);
     Data_in_Intel_64k = Data_in_Intel_64k((num_block_sizes * num_iters)+1:(2 * num_block_sizes * num_iters), :);
     Data_in_AMD_65k   = Data_in_AMD_65k((num_block_sizes * num_iters)+1:(2 * num_block_sizes * num_iters), :);
     Data_in_AMD_64k   = Data_in_AMD_64k((num_block_sizes * num_iters)+1:(2 * num_block_sizes * num_iters), :);
-
-    show_labels = 0;
 
     % Horizontally stacking Intel and AMD machines
     tiledlayout(2, 2,"TileSpacing","tight")

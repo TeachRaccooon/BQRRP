@@ -1,16 +1,8 @@
-function[] = hqrrp_performance_varying_block_size()
-    Data_in_Intel = readfile('Data_in/2025_02/SapphireRapids/HQRRP_speed_comparisons_block_size/2025_03_12_BQRRP_speed_comparisons_block_size_num_info_lines_7.txt', 7);
-    Data_in_AMD  = readfile('Data_in/2025_02/Zen4c/HQRRP_speed_comparisons_block_size/2025_03_12_BQRRP_speed_comparisons_block_size_num_info_lines_7.txt', 7);
+function[] = hqrrp_speed_comparisons_block_size(filename_Intel, filename_AMD, rows, cols, num_thread_nums, num_block_sizes, num_iters, num_algs, show_labels)
+    
+    Data_in_Intel = readfile(filename_Intel, 7);
+    Data_in_AMD = readfile(filename_AMD, 7);
 
-    rows = 32000;
-    cols = 32000;
-
-    num_thread_nums = 5;
-    num_block_sizes = 11;
-    num_iters = 3;
-    num_algs = 7;
-
-    show_labels = 0;
     plot_position = 1;
     y_lim = [90, 400, 1600, 3800, 4200];
 
@@ -64,18 +56,23 @@ function[] = process_and_plot(Data_in, num_block_sizes, num_iters, num_algs, row
     grid on
 
     if show_labels 
-        if mod(plot_position, 2)
-            ylabel('GigaFLOP/s', 'FontSize', 20);
-        end
         switch plot_position
             case 1
+                ylabel('threads=1;GigaFLOP/s', 'FontSize', 20);
                 title('Intel CPU', 'FontSize', 20);
             case 2
                 title('AMD CPU', 'FontSize', 20);
-            case 13
-                xlabel('block size', 'FontSize', 20); 
-            case 14
-                xlabel('block size', 'FontSize', 20); 
+            case 3
+                ylabel('threads=4;GigaFLOP/s', 'FontSize', 20);
+            case 5
+                ylabel('threads=16;GigaFLOP/s', 'FontSize', 20);
+            case 7
+                ylabel('threads=64;GigaFLOP/s', 'FontSize', 20);
+            case 9
+                ylabel('threads=128;GigaFLOP/s', 'FontSize', 20);
+                xlabel('dim', 'FontSize', 20); 
+            case 10
+                xlabel('dim', 'FontSize', 20); 
         end
     end
 

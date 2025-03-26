@@ -6,9 +6,6 @@ function[] = bqrrp_speed_comparisons_mat_size_cpu(filename_Intel, filename_AMD, 
     y_lim = [100, 500, 1600, 3800, 4200];
     plot_position = 1;
 
-    size(Data_in_Intel)
-    size(Data_in_AMD)
-
     %128 threads - 1 thread
     tiledlayout(5, 2,"TileSpacing","compact")
     for i = 1:num_thread_nums
@@ -64,9 +61,6 @@ function[] = process_and_plot(Data_in, num_mat_sizes, num_iters, num_algs, rows,
     grid on
     
     if show_labels 
-        if mod(plot_position, 2)
-            ylabel('GigaFLOP/s', 'FontSize', 20);
-        end
         switch plot_position
             case 1
                 ylabel('threads=1;GigaFLOP/s', 'FontSize', 20);
