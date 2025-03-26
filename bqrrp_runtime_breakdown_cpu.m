@@ -1,39 +1,24 @@
-function[] = bqrrp_runtime_breakdown_cpu()
-    % 65k DATA
-    Data_in_CQR_Intel = readfile('Data_in/2025_02/SapphireRapids/BQRRRP_runtime_breakdown/2025_02_19_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    Data_in_HQR_Intel = readfile('Data_in/2025_02/SapphireRapids/BQRRRP_runtime_breakdown/2025_02_07_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    % 448 threads
-    Data_in_CQR_AMD   = readfile('Data_in/2025_02/Zen4c/BQRRRP_runtime_breakdown/2025_03_01_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    Data_in_HQR_AMD   = readfile('Data_in/2025_02/Zen4c/BQRRRP_runtime_breakdown/2025_03_02_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    
-    % 64k DATA
-    %Data_in_CQR_Intel = readfile('Data_in/2025_02/SapphireRapids/BQRRRP_runtime_breakdown/2025_02_15_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    %Data_in_HQR_Intel = readfile('Data_in/2025_02/SapphireRapids/BQRRRP_runtime_breakdown/2025_02_16_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    %Data_in_CQR_AMD  = readfile('Data_in/2025_02/Zen4c/BQRRRP_runtime_breakdown/2025_03_03_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-    %Data_in_HQR_AMD  = readfile('Data_in/2025_02/Zen4c/BQRRRP_runtime_breakdown/2025_03_04_BQRRP_runtime_breakdown_num_info_lines_7.txt', 7);
-
-    num_block_sizes = 6;
-    numiters = 3;
-
-    show_labels = 0;
+function[] = bqrrp_runtime_breakdown_cpu(filename_Intel, filename_AMD, num_block_sizes, num_iters, show_labels)
+    Data_in_Intel = readfile(filename_Intel, 7);
+    Data_in_AMD   = readfile(filename_AMD, 7);
 
     % Vertically stacking BQRRP_CQR and BQRRP_HQR
     % Horizontally stacking Intel and AMD machines
     tiledlayout(2, 2,"TileSpacing","tight")
     nexttile
-    process_and_plot(Data_in_CQR_Intel, num_block_sizes, numiters, 1, show_labels)
+    process_and_plot(Data_in_Intel(1:num_block_sizes*num_iters, :), num_block_sizes, num_iters, 1, show_labels)
     nexttile
-    process_and_plot(Data_in_CQR_AMD, num_block_sizes, numiters, 2, show_labels)
+    process_and_plot(Data_in_AMD(1:num_block_sizes*num_iters, :), num_block_sizes, num_iters, 2, show_labels)
     nexttile
-    process_and_plot(Data_in_HQR_Intel, num_block_sizes, numiters, 3, show_labels)
+    process_and_plot(Data_in_Intel(num_block_sizes*num_iters+1:end, :), num_block_sizes, num_iters, 3, show_labels)
     nexttile
-    process_and_plot(Data_in_HQR_AMD, num_block_sizes, numiters, 4, show_labels)
+    process_and_plot(Data_in_AMD(num_block_sizes*num_iters+1:end, :), num_block_sizes, num_iters, 4, show_labels)
 
 end
 
-function[] = process_and_plot(Data_in, num_block_sizes, numiters, plot_position, show_labels)
+function[] = process_and_plot(Data_in, num_block_sizes, num_iters, plot_position, show_labels)
 
-    Data_in = data_preprocessing_best(Data_in, num_block_sizes, numiters);
+    Data_in = data_preprocessing_best(Data_in, num_block_sizes, num_iters);
 
     for i = 1:size(Data_in, 1)
         Data_out_ICQRRP_CPU(i, 7) = 100 * Data_in(i, 1)                  /Data_in(i, 10); %#ok<AGROW> % SKOP
@@ -98,16 +83,16 @@ function[] = process_and_plot(Data_in, num_block_sizes, numiters, plot_position,
     end
 end
 
-function[Data_out] = data_preprocessing_best(Data_in, num_col_sizes, numiters)
+function[Data_out] = data_preprocessing_best(Data_in, num_col_sizes, num_iters)
     
     Data_out = [];
     i = 1;
 
     Data_out = [];
-    while i < num_col_sizes * numiters
+    while i < num_col_sizes * num_iters
         best_speed = intmax;
         best_speed_idx = i;
-        for j = 1:numiters
+        for j = 1:num_iters
             if Data_in(i, 10) < best_speed
                 best_speed = Data_in(i, 10);
                 best_speed_idx = i;

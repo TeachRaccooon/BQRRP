@@ -1,14 +1,12 @@
-function[] = bqrrp_runtime_breakdown_gpu()
-    Data_in_CQR = readfile('Data_in/2025_02/H100/BQRRRP_runtime_breakdown/2025_03_03_BQRRP_GPU_runtime_breakdown_cholqr__num_info_lines_7.txt', 7);
-    Data_in_HQR = readfile('Data_in/2025_02/H100/BQRRRP_runtime_breakdown/2025_03_03_BQRRP_GPU_runtime_breakdown_qrf__num_info_lines_7.txt', 7);
+function[] = bqrrp_runtime_breakdown_gpu(filename_CQR, filename_HQR, show_labels)
+    Data_in_CQR = readfile(filename_CQR, 7);
+    Data_in_HQR = readfile(filename_HQR, 7);
 
     % The test that acquires data uses the following block sizes:
     %{32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480, 512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664, 1792, 1920, 2048};
     % We only want to plot powers of two:
     Data_in_CQR = Data_in_CQR([1, 2, 4, 8, 16, 20, 28], :);
     Data_in_HQR = Data_in_HQR([1, 2, 4, 8, 16, 20, 28], :);
-
-    show_labels = 0;
 
     % Vertically stacking BQRRP_CQR and BQRRP_HQR
     tiledlayout(2, 1,"TileSpacing","tight")
@@ -52,14 +50,10 @@ function[] = process_and_plot(Data_in, plot_position, show_labels)
     if show_labels 
         switch plot_position
             case 1
-                title('Intel CPU', 'FontSize', 20);
+                title('NVIDIA GPU', 'FontSize', 20);
                 ylabel('CQR // Runtime %', 'FontSize', 20);
             case 2
-                title('AMD CPU', 'FontSize', 20);
-            case 3
                 ylabel('HQR // Runtime %', 'FontSize', 20);
-                xlabel('block size', 'FontSize', 20); 
-            case 4
                 xlabel('block size', 'FontSize', 20); 
         end
     end

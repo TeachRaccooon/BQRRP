@@ -1,0 +1,37 @@
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:128
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 64000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+2585213,  2714359,  39166082,  0,  0,  345553,  1194014,
+2451749,  2313620,  38893124,  0,  0,  255652,  1174913,
+2519592,  2134369,  38915863,  0,  0,  224650,  1351902,
+4164903,  3615757,  94222227,  0,  0,  801679,  143719490,
+4412689,  3477311,  92332570,  0,  0,  836979,  141681349,
+4186290,  3771688,  90590176,  0,  0,  920850,  141945708,
+12143175,  9813368,  231948337,  0,  0,  4261237,  365830479,
+12388810,  10394173,  233885507,  0,  0,  4297634,  367313544,
+12097601,  10581786,  231847360,  0,  0,  4553342,  361637027,
+53864916,  50032403,  516555476,  0,  0,  28954633,  1344853546,
+54849916,  51326740,  527399591,  0,  0,  30065297,  1346112356,
+55475067,  51970265,  536405137,  0,  0,  29513800,  1347022879,
+Description: Results from the BQRRP speed comparison benchmark, recording the time it takes to perform BQRRP and alternative QR and QRCP factorizations.
+File format: 7 columns, containing time for each algorithm: BQRRP+CholQR, BQRRP+QRF, HQRRP, HQRRP+QRF, HQRRP+CholQR, QRF, QP3;               rows correspond to BQRRP runs with varying mat sizes, with numruns repititions of each mat size.
+Num OMP threads:128
+Input type:2
+Input size: dim start: 8000, 16000, 32000, 64000, 
+Additional parameters: BQRRP block size: 0 num runs per size 3 BQRRP d factor: 1.000000
+2132956,  2335216,  3151626,  0,  0,  4543025,  1665019,
+1842457,  1314210,  2962230,  0,  0,  218186,  2037151,
+1930251,  1338332,  3125537,  0,  0,  300127,  1671684,
+3778492,  3378288,  107408374,  0,  0,  770155,  118520646,
+3829850,  3156470,  107696087,  0,  0,  612092,  118775768,
+3994498,  3181655,  107373740,  0,  0,  672485,  118404425,
+11944957,  11134193,  231078811,  0,  0,  3640966,  339314180,
+12612471,  10969625,  229690701,  0,  0,  3637206,  338850459,
+12354951,  11119222,  230057800,  0,  0,  3718623,  339237595,
+58122137,  55312280,  547727240,  0,  0,  27087314,  1372704580,
+59304904,  55863187,  546045102,  0,  0,  27789736,  1372323322,
+59114635,  55653581,  550281592,  0,  0,  27642767,  1375630141,
+

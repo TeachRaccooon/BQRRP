@@ -1,4 +1,4 @@
-function[] = bqrrp_subroutine_performance_apply_q()
+function[] = bqrrp_subroutine_performance_apply_q(filename_Intel, filename_AMD, rows1, cols1, rows2, cols2, num_block_sizes, num_iters, num_algs, show_labels)
     Data_in_Intel_65k = readfile('Data_in/2025_02/SapphireRapids/BQRRP_subroutines_speed/2025_02_07_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
     Data_in_Intel_64k = readfile('Data_in/2025_02/SapphireRapids/BQRRP_subroutines_speed/2025_02_15_BQRRP_subroutines_speed_num_info_lines_10.txt', 10);
     % 224 threads
