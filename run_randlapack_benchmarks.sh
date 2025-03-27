@@ -172,81 +172,81 @@ else
     # PERFORMING BENCHMARK RUNS
     # HQRRP plot remake benchmarks
     for ITEM in "${THREADS_LIST[@]}"; do
-        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/HQRRP_plot_remake/$DATETIME hqrrp_const 1 1 1 1000;"
-        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/HQRRP_plot_remake/$DATETIME hqrrp_const 1 1 1 1000;"
+        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/HQRRP_plot_remake/$DATETIME hqrrp_const 20 1 1 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;"
+        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/HQRRP_plot_remake/$DATETIME hqrrp_const 20 1 1 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000;"
     done
     echo -e "HQRRP plot remake benchmarks complete\n"
 
     # BQRRP subroutines speed
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_subroutines_speed CPU_DIR/BQRRP_subroutines_speed/$DATETIME 1 1024 256;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_subroutines_speed $CPU_DIR/BQRRP_subroutines_speed/$DATETIME 1 1024 256;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_subroutines_speed CPU_DIR/BQRRP_subroutines_speed/$DATETIME 3 65536 256 512 1024 2048 4096 8192;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_subroutines_speed $CPU_DIR/BQRRP_subroutines_speed/$DATETIME 3 65536 256 512 1024 2048 4096 8192;"
 
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_subroutines_speed CPU_DIR/BQRRP_subroutines_speed/$DATETIME 1 1000 250;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_subroutines_speed $CPU_DIR/BQRRP_subroutines_speed/$DATETIME 1 1000 250;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_subroutines_speed CPU_DIR/BQRRP_subroutines_speed/$DATETIME 3 64000 250 500 1000 2000 4000 8000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_subroutines_speed $CPU_DIR/BQRRP_subroutines_speed/$DATETIME 3 64000 250 500 1000 2000 4000 8000;"
     echo -e "BQRRP subroutines speed complete\n"
 
     # BQRRP runtime breakdown
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME cholqr 1 1024 1024 256;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME cholqr 1 1024 1024 256;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME cholqr 3 65536 65536 256 512 1024 2048 4096 8192;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME cholqr 3 65536 65536 256 512 1024 2048 4096 8192;"
     
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  1 1024 1024 256;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  1 1024 1024 256;"
-    
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME cholqr 1 1000 1000 250;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME cholqr 1 1000 1000 250;"
-    
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  1 1000 1000 250;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  1 1000 1000 250;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  3 65536 65536 256 512 1024 2048 4096 8192;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  3 65536 65536 256 512 1024 2048 4096 8192;"
     echo -e "BQRRP runtime breakdown complete\n"
 
     # BQRRP pivot quality
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_pivot_quality CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_pivot_quality $CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_pivot_quality CPU_DIR/BQRRP_pivot_quality/$DATETIME 16384 16384 64;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_pivot_quality $CPU_DIR/BQRRP_pivot_quality/$DATETIME 16384 16384 64;"
 
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_pivot_quality CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_pivot_quality $CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_pivot_quality CPU_DIR/BQRRP_pivot_quality/$DATETIME 16384 16384 4096;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_pivot_quality $CPU_DIR/BQRRP_pivot_quality/$DATETIME 16384 16384 4096;"
     echo -e "BQRRP pivot quality complete\n"
 
     # BQRRP performance varying block size
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 1 1024 1024 256;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 1 1024 1024 256;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 3 65536 65536 256 512 1024 2048 4096 8192;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 3 65536 65536 256 512 1024 2048 4096 8192;"
 
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 1 1000 1000 250;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 1 1000 1000 250;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 3 64000 64000 250 500 1000 2000 4000 8000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 3 64000 64000 250 500 1000 2000 4000 8000;"
     echo -e "BQRRP performance varying block size complete\n"
 
     # BQRRP performance varying mat size
     for ITEM in "${THREADS_LIST[@]}"; do
-        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/BQRRP_speed_comparisons_mat_size/$DATETIME default 1 1 32 1000;"
-        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/BQRRP_speed_comparisons_mat_size/$DATETIME default 1 1 32 1000;"
+        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/BQRRP_speed_comparisons_mat_size/$DATETIME default 3 1 32 8000 16000 32000;"
+        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/BQRRP_speed_comparisons_mat_size/$DATETIME default 3 1 32 8000 16000 32000;"
     done
     echo -e "BQRRP performance varying mat size complete\n"
 
     # HQRRP performance varying block size
     for ITEM in "${THREADS_LIST[@]}"; do
-        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/HQRRP_speed_comparisons_block_size/$DATETIME hqrrp 1 1000 1000 5;"
-        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/HQRRP_speed_comparisons_block_size/$DATETIME hqrrp 1 1000 1000 5;"
+        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/HQRRP_speed_comparisons_block_size/$DATETIME hqrrp 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;"
+        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/HQRRP_speed_comparisons_block_size/$DATETIME hqrrp 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;"
     done
     echo -e "HQRRP performance varying block size complete\n"
 
     # HQRRP runtime breakdown
     for ITEM in "${THREADS_LIST[@]}"; do
-        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/HQRRP_runtime_breakdown CPU_DIR/HQRRP_runtime_breakdown/$DATETIME 1 1000 1000 5;"
-        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/HQRRP_runtime_breakdown $CPU_DIR/HQRRP_runtime_breakdown/$DATETIME 1 1000 1000 5;"
+        echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM EXECUTION_DIR/HQRRP_runtime_breakdown CPU_DIR/HQRRP_runtime_breakdown/$DATETIME 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;"
+        eval "$NUMACTL_VAR env OMP_NUM_THREADS=$ITEM $EXECUTION_DIR/HQRRP_runtime_breakdown $CPU_DIR/HQRRP_runtime_breakdown/$DATETIME 3 32000 32000 5 10 25 50 125 250 500 1000 2000 4000 8000;"
     done
     echo -e "HQRRP runtime breakdown complete\n"
 
     # BQRRP performance varying block size small
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 1 1000 1000 5;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 1 1000 1000 5;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 3 1000 1000 5 10 25 50 125 250 500 1000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 3 1000 1000 5 10 25 50 125 250 500 1000;"
+    
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 3 2000 2000 5 10 25 50 125 250 500 1000 2000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 3 2000 2000 5 10 25 50 125 250 500 1000 2000;"
+
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 3 4000 4000 5 10 25 50 125 250 500 1000 4000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_block_size $CPU_DIR/BQRRP_speed_comparisons_block_size_small/$DATETIME default 3 4000 4000 5 10 25 50 125 250 500 1000 4000;"
     echo -e "BQRRP performance varying block size small complete\n"
 
     # BQRRP performance varying mat size rectangular: tall and wide
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 1 2   32 1000;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 1 2   32 1000;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 3 2 32 8000 16000 32000 64000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 3 2 32 8000 16000 32000 64000;"
 
-    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 1 0.5 32 1000;"
-    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 1 0.5 32 1000;"
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_mat_size CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 3 0.5 32 8000 16000 32000 64000;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_speed_comparisons_mat_size $CPU_DIR/BQRRP_speed_comparisons_mat_size_rectangular/$DATETIME default_hqrrp_const 3 0.5 32 8000 16000 32000 64000;"
     echo -e "BQRRP performance varying mat size rectangular: tall and wide complete\n"
 fi
 
