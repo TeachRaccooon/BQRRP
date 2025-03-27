@@ -4,7 +4,11 @@ function[] = bqrrp_speed_comparisons_mat_size_rectangle_cpu(filename_Intel, file
     Data_in_AMD   = readfile(filename_AMD, 7);
 
     % Tall
-    figure
+    if show_labels
+        figure('Name', 'Figure 17: BQRRP performance varying mat size tall');
+    else
+        figure
+    end
     tiledlayout(1, 2,"TileSpacing","compact")
     nexttile
     process_and_plot(Data_in_Intel(1:num_mat_sizes*num_iters,:), num_mat_sizes, num_iters, num_algs, rows, cols, 1, show_labels, 4200)
@@ -12,7 +16,11 @@ function[] = bqrrp_speed_comparisons_mat_size_rectangle_cpu(filename_Intel, file
     process_and_plot(Data_in_AMD(1:num_mat_sizes*num_iters,:), num_mat_sizes, num_iters, num_algs, rows, cols, 2, show_labels, 4200)
 
     % Wide
-    figure
+    if show_labels
+        figure('Name', 'Figure 18: BQRRP performance varying mat size wide');
+    else
+        figure
+    end
     tiledlayout(1, 2,"TileSpacing","compact")
     nexttile
     process_and_plot(Data_in_Intel(num_mat_sizes*num_iters+1:end,:), num_mat_sizes, num_iters, num_algs, cols, rows, 3, show_labels, 4900)
