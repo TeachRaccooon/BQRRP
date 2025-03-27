@@ -48,6 +48,10 @@ if [[ ! -d "$CPU_DIR/BQRRP_runtime_breakdown" ]]; then
     mkdir -p "$CPU_DIR/BQRRP_runtime_breakdown"
     echo "Directory created at: $CPU_DIR/BQRRP_runtime_breakdown"
 fi
+if [[ ! -d "$CPU_DIR/BQRRP_pivot_quality" ]]; then
+    mkdir -p "$CPU_DIR/BQRRP_pivot_quality"
+    echo "Directory created at: $CPU_DIR/BQRRP_pivot_quality"
+fi
 if [[ ! -d "$CPU_DIR/BQRRP_speed_comparisons_block_size" ]]; then
     mkdir -p "$CPU_DIR/BQRRP_speed_comparisons_block_size"
     echo "Directory created at: $CPU_DIR/BQRRP_speed_comparisons_block_size"
@@ -75,7 +79,6 @@ fi
 
 # GPU prepwork and benchmarking
 if [ "$RANDNLA_PROJECT_GPU_AVAIL" = "auto" ]; then
-
     GPU_NAME=$(lspci | grep -Ei 'vga|3d|display' | grep -Ei 'nvidia|amd' | head -n 1 | awk -F ': ' '{print $2}' | tr -d '[:punct:]' | tr ' ' '_')
     GPU_DIR="$BENCHMARK_OUTPUT_DIR/$GPU_NAME"
     # Create the directory named after the current GPU 
@@ -195,6 +198,14 @@ else
     echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_runtime_breakdown CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  1 1000 1000 250;"
     eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_runtime_breakdown $CPU_DIR/BQRRP_runtime_breakdown/$DATETIME geqrf  1 1000 1000 250;"
     echo -e "BQRRP runtime breakdown complete\n"
+
+    # BQRRP pivot quality
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_pivot_quality CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_pivot_quality $CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
+
+    echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_pivot_quality CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
+    eval "$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS $EXECUTION_DIR/BQRRP_pivot_quality $CPU_DIR/BQRRP_pivot_quality/$DATETIME 1000 1000 250;"
+    echo -e "BQRRP pivot quality complete\n"
 
     # BQRRP performance varying block size
     echo -e "\n$NUMACTL_VAR env OMP_NUM_THREADS=$MAX_THREADS EXECUTION_DIR/BQRRP_speed_comparisons_block_size CPU_DIR/BQRRP_speed_comparisons_block_size/$DATETIME default 1 1024 1024 256;"
